@@ -1,4 +1,4 @@
-let isJumping = false, isEndGame = true, dinoPosition = 0, timerGameId;
+let isJumping = false, isEndGame = true, dinoPosition = 0, timerGameId, timerControlObstaclesId = [];
 const GRAVITY = 0.9;
 const MAX_JUMP_HIGH = 160;
 
@@ -52,7 +52,7 @@ function controlObstacle(obstaclePosition, obstacle) {
     // * Conditions to game over
     if (obstaclePosition > 0 && obstaclePosition < 60 && dinoPosition < 60) {
       clearInterval(timerGameId);
-      clearInterval(timerControlObstacleId);
+      timerControlObstaclesId.forEach(id => clearInterval(id));
       document.querySelector('body').classList.add('stop');
       document.querySelector('.title').innerHTML = 'Game Over... Press enter to reset';
       isEndGame = true;
@@ -62,6 +62,7 @@ function controlObstacle(obstaclePosition, obstacle) {
       obstacle.style.left = `${obstaclePosition}px`;
     }
   }, 20);
+  timerControlObstaclesId.push(timerControlObstacleId);
 }
 
 function generateObstacle() {
